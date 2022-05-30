@@ -93,7 +93,7 @@ and pp_no_scan fmt r =
   else if tag = Obj.double_tag then
     Format.fprintf fmt "@[<hv 2>double(%f)@]" (Obj.obj r : float)
   else if tag = Obj.double_array_tag then
-    Format.fprintf fmt "@[<hv 2>double_array(@,%a)@]" (pp_list Format.pp_print_float) (Array.to_list (Obj.obj r : float array))
+    Format.fprintf fmt "@[<hv 2>double-array(@,%a)@]" (pp_list Format.pp_print_float) (Array.to_list (Obj.obj r : float array))
   else if tag = Obj.abstract_tag then
     Format.fprintf fmt "@[<hv 2>abstract(%a)@]" (pp_list pp_rawfield) (raw_fields r)
   else if tag = Obj.custom_tag then

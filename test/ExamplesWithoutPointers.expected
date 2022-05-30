@@ -41,5 +41,5 @@ variant0(
 forward(int(3))
 forcing(<0x1>)
 variant0(int(1),int(2),int(3))
-double_array(1.,2.,3.)
+double-array(1.,2.,3.)
 variant0(int(1),variant0(int(2),variant0(int(3),int(0))))
