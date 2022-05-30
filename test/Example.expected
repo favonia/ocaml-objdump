@@ -15,14 +15,14 @@ variant0(
   string("str"))
 string(
   "a very very very very very very very long string with \0012 and \" and ' and \\")
-closure(<code>,{arity=1,start_env=2})
+closure{code=<0x55920bc99390>,arity=1,env=()}
 variant0(
   variant0(string("fst"),string("snd")),
   int(2),
   double(3.000000),
   int(0),
-  closure(<code>,{arity=1,start_env=2}))
-variant0(int(42),closure(<code>,{arity=1,start_env=2},int(1000)))
+  closure{code=<0x55920bc993a0>,arity=1,env=()})
+variant0(int(42),closure{code=<0x55920bc993b0>,arity=1,env=(int(1000))})
 double(3.140000)
 variant0(double(2.180000),string("a"))
 variant0(
@@ -33,8 +33,27 @@ variant0(
   variant0(
     object{class=string("Dune__exe__Example.E"),object-id=int(10)},
     int(10)))
-lazy(closure(<code>,{arity=1,start_env=2}))
+lazy(closure{code=<0x55920bc99420>,arity=1,env=()})
 forward(int(3))
+forcing(<0x1>)
+closure{
+  code=<0x55920bc99450>,
+  arity=1,
+  _=<0xcf9>,
+  _=<0x55920bc99470>,
+  _=<0x100000000000005>,
+  env=()}
+infix{
+  offset=-24,
+  whole=
+    closure{
+      code=<0x55920bc99450>,
+      arity=1,
+      _=<0xcf9>,
+      _=<0x55920bc99470>,
+      _=<0x100000000000005>,
+      env=()}}
 variant0(int(1),int(2),int(3))
 double_array(1.,2.,3.)
 variant0(int(1),variant0(int(2),variant0(int(3),int(0))))
+cont(<0x55920d996b11>)

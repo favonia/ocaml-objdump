@@ -31,6 +31,20 @@ let () = test (U D)
 let () = test (U (E 10))
 let () = test (lazy (1 + 2))
 let () = let m = lazy (1 + 2) in let _ = Lazy.force m in test m
+let () = let rec m = lazy (test m) in Lazy.force m
+
+let rec f x = g x
+and g x = f x
+
+let () = test f
+let () = test g
 let () = test [|1; 2; 3|]
 let () = test [|1.0; 2.0; 3.0|]
 let () = test [1; 2; 3]
+
+type _ Effect.t += F : unit Effect.t
+let k = Effect.Deep.try_with Effect.perform F
+    { effc = fun (type a) (e : a Effect.t) ->
+          match e with
+          | F -> Some (fun (k : (a, _) Effect.Deep.continuation) -> test k; Effect.Deep.continue k ())
+          | _ -> None }
