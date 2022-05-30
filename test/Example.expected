@@ -1,0 +1,34 @@
+int(0)
+int(0)
+variant0(int(100))
+int(1)
+int(42)
+int(0)
+int(-1)
+int(0)
+variant0(
+  variant0(
+    variant0(variant0(variant0(variant0(variant0(variant0(int(10)))))))))
+variant0(object(string("Failure"),int(-3)),string("str"))
+variant0(object(string("Invalid_argument"),int(-4)),string("str"))
+string(
+  "a very very very very very very very long string with \0012 and \" and ' and \\")
+closure{arity=1,start_env=2}
+variant0(
+  variant0(string("fst"),string("snd")),
+  int(2),
+  double(3.000000),
+  int(0),
+  closure{arity=1,start_env=2})
+double(3.140000)
+variant0(double(2.180000),string("a"))
+variant0(
+  object(string("Dune__exe__Example.U"),int(11)),
+  object(string("Dune__exe__Example.D"),int(9)))
+variant0(
+  object(string("Dune__exe__Example.U"),int(11)),
+  variant0(object(string("Dune__exe__Example.E"),int(10)),int(10)))
+lazy(closure{arity=1,start_env=2})
+variant0(int(1),int(2),int(3))
+double_array(1.,2.,3.)
+variant0(int(1),variant0(int(2),variant0(int(3),int(0))))

@@ -1,0 +1,17 @@
+name: Build, test, and doc update
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  run:
+    strategy:
+      matrix:
+        ocaml-compiler: ["ocaml-variants.5.0.0+trunk"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: RedPRL/actions-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}

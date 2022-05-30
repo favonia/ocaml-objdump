@@ -1,0 +1,4 @@
+(test
+ (name Example)
+ (modules Example)
+ (libraries objdump))

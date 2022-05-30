@@ -1,0 +1,3 @@
+(library
+ (name Objdump)
+ (public_name objdump))
