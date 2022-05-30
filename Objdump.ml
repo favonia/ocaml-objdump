@@ -1,5 +1,9 @@
-let pp_list pp =
-  Format.pp_print_list ~pp_sep:(fun fmt () -> Format.fprintf fmt ",@,") pp
+let pp_list ?(start_with_sep=false) pp fmt =
+  function
+  | [] -> ()
+  | l ->
+    if start_with_sep then Format.fprintf fmt ",@,";
+    Format.pp_print_list ~pp_sep:(fun fmt () -> Format.fprintf fmt ",@,") pp fmt l
 
 let rec special_scan_tags =
   Obj.[
@@ -31,7 +35,7 @@ and pp fmt r =
 and pp_variant fmt r =
   Format.fprintf fmt "@[<hv 2>variant%i(@,%a)@]" (Obj.tag r) (pp_list pp) (fields r)
 
-and fields r = List.init (Obj.size r) (Obj.field r)
+and fields ?(start=0) r = List.init (Obj.size r - start) (fun i -> Obj.field r (i + start))
 
 and pp_forcing fmt _r =
   Format.fprintf fmt "@[<hv 2>forcing(...)@]" (* TODO *)
@@ -45,7 +49,8 @@ and pp_lazy fmt r =
 
 and pp_closure fmt r =
   let info = Obj.Closure.info r in
-  Format.fprintf fmt "@[<hv 2>closure{@,arity=%i,@,start_env=%i}@]" info.arity info.start_env
+  Format.fprintf fmt "@[<hv 2>closure(@,<code>,@,@[<hv 1>{arity=%i,@,start_env=%i}@]%a)@]"
+    info.arity info.start_env (pp_list ~start_with_sep:true pp) (fields ~start:info.start_env r)
 
 and pp_object fmt r =
   assert (Obj.size r = 2);
