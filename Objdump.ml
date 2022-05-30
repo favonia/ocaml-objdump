@@ -54,7 +54,8 @@ and pp_closure fmt r =
 
 and pp_object fmt r =
   assert (Obj.size r = 2);
-  Format.fprintf fmt "@[<hv 2>object(@,%a)@]" (pp_list pp) (fields r)
+  Format.fprintf fmt "@[<hv 2>object{@,class=%a,@,object-id=%a}@]"
+    pp (Obj.field r 0) pp (Obj.field r 1)
 
 and pp_infix fmt _r =
   Format.fprintf fmt "@[<hv 2>infix(...)@]" (* TODO *)
