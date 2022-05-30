@@ -29,6 +29,7 @@ variant0(
   object(string("Dune__exe__Example.U"),int(11)),
   variant0(object(string("Dune__exe__Example.E"),int(10)),int(10)))
 lazy(closure{arity=1,start_env=2})
+forward(int(3))
 variant0(int(1),int(2),int(3))
 double_array(1.,2.,3.)
 variant0(int(1),variant0(int(2),variant0(int(3),int(0))))

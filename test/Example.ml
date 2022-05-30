@@ -28,6 +28,7 @@ let () = test (2.18, "a")
 let () = test (U D)
 let () = test (U (E 10))
 let () = test (lazy (1 + 2))
+let () = let m = lazy (1 + 2) in let _ = Lazy.force m in test m
 let () = test [|1; 2; 3|]
 let () = test [|1.0; 2.0; 3.0|]
 let () = test [1; 2; 3]
