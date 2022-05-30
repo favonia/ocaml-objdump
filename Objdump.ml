@@ -70,11 +70,10 @@ and pp_object fmt r =
     pp (Obj.field r 0) pp (Obj.field r 1)
 
 and pp_infix fmt r =
-  let offset = - Obj.size r * (Nativeint.size / 8) in
-  (* XXX not tested *)
-  let real_r = Obj.add_offset r (Int32.of_int offset) in
+  let offset = Obj.size r in
+  let whole_r = Obj.add_offset r (Int32.of_int (- offset * (Nativeint.size / 8))) in
   (* this is safe because [pp_closure] will not recuresely call [pp] on opaque fields. *)
-  Format.fprintf fmt "@[<hv 2>infix{@,offset=%i,@,@[whole=@;<0 2>@[%a@]}@]@]" offset pp_closure real_r
+  Format.fprintf fmt "@[<hv 2>infix{@,offset=%i,@,@[whole=@;<0 2>@[%a@]}@]@]" offset pp_closure whole_r
 
 and pp_forward fmt r =
   assert (Obj.size r = 1);
