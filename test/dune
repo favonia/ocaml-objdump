@@ -1,4 +1,9 @@
 (test
- (name Example)
- (modules Example)
+ (name ExamplesWithoutPointers)
+ (modules ExamplesWithoutPointers)
+ (libraries objdump))
+
+(test
+ (name ExamplesWithPointers)
+ (modules ExamplesWithPointers)
  (libraries objdump))
