@@ -1,6 +1,6 @@
 # 🖨️ Printing OCaml Runtime Representations
 
-A small library I wrote when hacking the OCaml compiler. Caveats: the code might only work for OCaml 5.0.
+A small library I wrote when hacking the OCaml compiler. Caveats: the parsing of `infix` and `closure` blocks is incomplete, and the code might only work for OCaml 5.0.
 
 ## API and Example Code
 
