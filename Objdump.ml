@@ -1,11 +1,9 @@
 let pp_sep fmt () = Format.fprintf fmt ",@,"
 
-let pp_list ?(start_with_sep=false) pp fmt =
-  function
-  | [] -> ()
-  | l ->
-    if start_with_sep then pp_sep fmt ();
-    Format.pp_print_list ~pp_sep pp fmt l
+let pp_list ?(start_with_sep=false) pp fmt l =
+  if start_with_sep
+  then List.iter (fun x -> pp_sep fmt (); pp fmt x) l
+  else Format.pp_print_list ~pp_sep pp fmt l
 
 let pp_rawfield fmt = Format.fprintf fmt "<%#nx>"
 
