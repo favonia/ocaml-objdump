@@ -31,3 +31,4 @@ let () = let rec m = lazy (test m) in Lazy.force m
 let () = test [|1; 2; 3|]
 let () = test [|1.0; 2.0; 3.0|]
 let () = test [1; 2; 3]
+let () = test Float.nan

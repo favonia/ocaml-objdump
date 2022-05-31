@@ -1,3 +1,5 @@
+let pp_double fmt = Format.fprintf fmt "%h"
+
 let pp_sep fmt () = Format.fprintf fmt ",@,"
 
 let pp_list ?(start_with_sep=false) pp fmt l =
@@ -91,9 +93,9 @@ and pp_no_scan fmt r =
   if tag = Obj.string_tag then
     Format.fprintf fmt "@[<hv 2>string(@,\"%s\")@]" (String.escaped (Obj.obj r : string))
   else if tag = Obj.double_tag then
-    Format.fprintf fmt "@[<hv 2>double(%f)@]" (Obj.obj r : float)
+    Format.fprintf fmt "@[<hv 2>double(%a)@]" pp_double (Obj.obj r : float)
   else if tag = Obj.double_array_tag then
-    Format.fprintf fmt "@[<hv 2>double-array(@,%a)@]" (pp_list Format.pp_print_float) (Array.to_list (Obj.obj r : float array))
+    Format.fprintf fmt "@[<hv 2>double-array(@,%a)@]" (pp_list pp_double) (Array.to_list (Obj.obj r : float array))
   else if tag = Obj.abstract_tag then
     Format.fprintf fmt "@[<hv 2>abstract(%a)@]" (pp_list pp_rawfield) (raw_fields r)
   else if tag = Obj.custom_tag then
