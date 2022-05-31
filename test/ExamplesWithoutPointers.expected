@@ -44,3 +44,6 @@ variant0(int(1),int(2),int(3))
 double-array(0x1p+0,0x1p+1,0x1.8p+1)
 variant0(int(1),variant0(int(2),variant0(int(3),int(0))))
 double(nan)
+custom{label=int32,value=10l}
+custom{label=int64,value=20L}
+custom{label=nativeint,value=30n}

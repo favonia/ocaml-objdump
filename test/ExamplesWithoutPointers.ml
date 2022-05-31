@@ -32,3 +32,6 @@ let () = test [|1; 2; 3|]
 let () = test [|1.0; 2.0; 3.0|]
 let () = test [1; 2; 3]
 let () = test Float.nan
+let () = test 10l
+let () = test 20L
+let () = test 30n

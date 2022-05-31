@@ -10,14 +10,14 @@ let pp_list ?(start_with_sep=false) pp fmt l =
 let pp_rawfield fmt = Format.fprintf fmt "<%#nx>"
 
 let rec special_scan_tags =
-  Obj.[
-    forcing_tag, pp_forcing;
-    cont_tag, pp_cont;
-    lazy_tag, pp_lazy;
-    closure_tag, pp_closure;
-    object_tag, pp_object;
-    infix_tag, pp_infix;
-    forward_tag, pp_forward;
+  [
+    Obj.forcing_tag, pp_forcing;
+    Obj.cont_tag, pp_cont;
+    Obj.lazy_tag, pp_lazy;
+    Obj.closure_tag, pp_closure;
+    Obj.object_tag, pp_object;
+    Obj.infix_tag, pp_infix;
+    Obj.forward_tag, pp_forward;
   ]
 
 and pp fmt r =
@@ -91,17 +91,33 @@ and pp_no_scan fmt r =
   assert (Obj.tag r >= Obj.no_scan_tag);
   let tag = Obj.tag r in
   if tag = Obj.string_tag then
-    Format.fprintf fmt "@[<hv 2>string(@,\"%s\")@]" (String.escaped (Obj.obj r : string))
+    Format.fprintf fmt "@[<hv 2>string(@,%S)@]" (Obj.obj r : string)
   else if tag = Obj.double_tag then
     Format.fprintf fmt "@[<hv 2>double(%a)@]" pp_double (Obj.obj r : float)
   else if tag = Obj.double_array_tag then
-    Format.fprintf fmt "@[<hv 2>double-array(@,%a)@]" (pp_list pp_double) (Array.to_list (Obj.obj r : float array))
+    Format.fprintf fmt "@[<hv 2>double-array(@,%a)@]" (pp_list pp_double) (Float.Array.to_list (Obj.obj r : floatarray))
   else if tag = Obj.abstract_tag then
     Format.fprintf fmt "@[<hv 2>abstract(%a)@]" (pp_list pp_rawfield) (raw_fields r)
   else if tag = Obj.custom_tag then
-    Format.fprintf fmt "@[<hv 2>custom(%a)@]" (pp_list pp_rawfield) (raw_fields r)
+    pp_custom fmt r
   else
     pp_unknown fmt r
+
+and pp_custom fmt r =
+  assert (Obj.tag r = Obj.custom_tag);
+  assert (Obj.size r >= 1);
+  let check_type x = Nativeint.equal (Obj.raw_field r 0) (Obj.raw_field (Obj.repr x) 0) in
+  if check_type Int32.zero then begin
+    assert (Obj.size r = 2);
+    Format.fprintf fmt "@[<hv 2>custom{@,label=int32,@,value=%ldl}@]" (Obj.obj r : int32)
+  end else if check_type Int64.zero then begin
+    assert (Obj.size r = 2);
+    Format.fprintf fmt "@[<hv 2>custom{@,label=int64,@,value=%LdL}@]" (Obj.obj r : int64)
+  end else if check_type Nativeint.zero then begin
+    assert (Obj.size r = 2);
+    Format.fprintf fmt "@[<hv 2>custom{@,label=nativeint,@,value=%ndn}@]" (Obj.obj r : nativeint)
+  end else
+    Format.fprintf fmt "@[<hv 2>custom(%a)@]" (pp_list pp_rawfield) (raw_fields r)
 
 and pp_unknown fmt r =
   Format.fprintf fmt "@[<hv 2>unknown%i(%a)@]"
